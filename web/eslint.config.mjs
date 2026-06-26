@@ -15,6 +15,13 @@ export default tseslint.config(
       ecmaVersion: "latest",
       sourceType: "module",
     },
-    rules: {},
+    rules: {
+      "indent": ["error", 2]
+    /*
+      "no-unused-vars": ["error", {
+        "varsIgnorePattern": "^_"
+      }]
+      */
+    },
   },
 );
