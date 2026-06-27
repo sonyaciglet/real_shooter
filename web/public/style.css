@@ -3,6 +3,7 @@ body {
     padding: 0;
     color: rgba(255, 255, 255, 0.87);
     background-color: #FFC0CB;
+    cursor: url("pointer.png"), auto;
 }
 
 .header {
@@ -11,6 +12,36 @@ body {
     padding-top: 10px;
     padding-bottom: 0px;
     overflow: hidden;
+}
+
+.text-block {
+    font-size: 20px;
+    color: black;
+}
+#title-container {
+    position: static;
+}
+.title-div h1 {
+    font-size: 40px;
+}
+
+#title1 {
+  position: absolute;
+  color: #00FFFF7D;
+  margin: 0px;
+  top: 0;
+  left: 0;
+}
+#title2 {
+  position: absolute;
+  color: #FF20207D;
+  margin: 0px;
+  top: 1px;
+  left: 2px;
+}
+
+a {
+    cursor: url("eye_cursor.png"), auto;
 }
 
 #app {
@@ -26,5 +57,6 @@ body {
 }
 
 #basic-shooter-canvas {
-    border:2px solid black;
+    border: 5px solid black;
+    cursor: crosshair;
 }

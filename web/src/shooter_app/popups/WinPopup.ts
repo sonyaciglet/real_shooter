@@ -1,14 +1,13 @@
-import { BlurFilter, Container, Sprite, Texture } from "pixi.js";
+import { BlurFilter, Container } from "pixi.js";
 
-import { engine } from "../getEngine";
+import { engine } from "../../common/getEngine";
 import { Button } from "../ui/Button";
 import { Label } from "../ui/Label";
-import { RoundedBox } from "../ui/RoundedBox";
+import { Box } from "../ui/Box";
+import { config } from "../config";
 
 /** Popup that shows up when gameplay is paused */
 export class WinPopup extends Container {
-  /** The dark semi-transparent background covering current screen */
-  private bg: Sprite;
   /** Container for the popup UI components */
   private panel: Container;
   /** The popup title label */
@@ -16,41 +15,32 @@ export class WinPopup extends Container {
   /** Button that closes the popup */
   private doneButton: Button;
   /** The panel background */
-  private panelBase: RoundedBox;
+  private panelBase: Box;
 
   constructor() {
     super();
 
-    this.bg = new Sprite(Texture.WHITE);
-    this.bg.tint = 0x0;
-    this.bg.interactive = true;
-    this.addChild(this.bg);
-
     this.panel = new Container();
     this.addChild(this.panel);
 
-    this.panelBase = new RoundedBox({ height: 300 });
+    this.panelBase = new Box({ height: 200, width: 300, color: 0xffffff });
     this.panel.addChild(this.panelBase);
+    this.panel.x = config.ScreenWidth / 2;
+    this.panel.y = config.ScreenHeight / 2;
 
     this.title = new Label({
       text: "YOU WIN!!",
-      style: { fill: 0xec1561, fontSize: 50 },
+      style: { fill: 0x000, fontSize: 40 },
     });
-    this.title.y = -80;
+    this.title.y = -20;
+    this.title.x = 0;
     this.panel.addChild(this.title);
 
     this.doneButton = new Button({ text: "Again!" });
-    this.doneButton.y = 70;
+    this.doneButton.y = 50;
+    this.doneButton.x = 0;
     this.doneButton.onPress.connect(() => engine().navigation.dismissPopup());
     this.panel.addChild(this.doneButton);
-  }
-
-  /** Resize the popup, fired whenever window size changes */
-  public resize(width: number, height: number) {
-    this.bg.width = width;
-    this.bg.height = height;
-    this.panel.x = width * 0.5;
-    this.panel.y = height * 0.5;
   }
 
   /** Present the popup, animated */

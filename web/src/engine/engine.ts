@@ -4,7 +4,7 @@ import type {
   DestroyOptions,
   RendererDestroyOptions,
 } from "pixi.js";
-import { Application, Assets, extensions, ResizePlugin } from "pixi.js";
+import { Application, Assets, extensions } from "pixi.js";
 import "pixi.js/app";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -13,11 +13,7 @@ import manifest from "../manifest.json";
 
 import { CreationAudioPlugin } from "./audio/AudioPlugin";
 import { CreationNavigationPlugin } from "./navigation/NavigationPlugin";
-import { CreationResizePlugin } from "./resize/ResizePlugin";
-import { getResolution } from "./utils/getResolution";
 
-extensions.remove(ResizePlugin);
-extensions.add(CreationResizePlugin);
 extensions.add(CreationAudioPlugin);
 extensions.add(CreationNavigationPlugin);
 
@@ -36,18 +32,19 @@ extensions.add(CreationNavigationPlugin);
 export class CreationEngine extends Application {
   /** Initialize the application */
   public async init(opts: Partial<ApplicationOptions>): Promise<void> {
-    opts.resizeTo ??= window;
-    opts.resolution ??= getResolution();
-
     await super.init(opts);
 
     // Append the application canvas to the document body
-    document.getElementById("pixi-container")!.appendChild(this.canvas);
+    console.log(opts);
+    if (!("canvas" in opts)) {
+      document.body.appendChild(this.canvas);
+    }
     // Add a visibility listener, so the app can pause sounds and screens
     document.addEventListener("visibilitychange", this.visibilityChange);
 
     // Init PixiJS assets with this asset manifest
-    await Assets.init({ manifest, basePath: "assets" });
+    await Assets.init({ manifest, basePath: "/assets" });
+    console.log(Assets);
     await Assets.loadBundle("preload");
 
     // List all existing bundles names

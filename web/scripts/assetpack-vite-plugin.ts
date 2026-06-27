@@ -7,6 +7,7 @@ import type { Plugin, ResolvedConfig } from "vite";
 export function assetpackPlugin() {
   const apConfig = {
     entry: "./raw-assets",
+    output: "./public/assets",
     pipes: [
       ...pixiPipes({
         cacheBust: false,

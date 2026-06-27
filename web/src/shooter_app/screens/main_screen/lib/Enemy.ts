@@ -1,6 +1,7 @@
 import { Color, Text } from "pixi.js";
 
 import { Point } from "./Point";
+import { config } from "../../../config";
 
 function colorGradient(fadeFraction: number) {
   const leftmostColor = new Color("green");
@@ -73,5 +74,15 @@ export class Enemy {
       this.text_sprite.text = "DEAD";
       this.text_sprite.style.fill = "#000000";
     }
+  }
+
+  reset() {
+    this.position = new Point(
+      Math.floor(Math.random() * config.ScreenWidth),
+      Math.floor(Math.random() * config.ScreenHeight),
+    );
+    this.text_sprite.text = this.position.toText();
+    this.dead = false;
+    this.kill_range = false;
   }
 }

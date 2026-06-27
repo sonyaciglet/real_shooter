@@ -1,28 +1,22 @@
 import { FancyButton } from "@pixi/ui";
 
-import { engine } from "../getEngine";
-
 import { Label } from "./Label";
 
 const defaultButtonOptions = {
   text: "",
-  width: 301,
-  height: 112,
+  width: 220,
+  height: 70,
   fontSize: 28,
 };
 
 type ButtonOptions = typeof defaultButtonOptions;
 
-/**
- * The big rectangle button, with a label, idle and pressed states
- */
 export class Button extends FancyButton {
   constructor(options: Partial<ButtonOptions> = {}) {
     const opts = { ...defaultButtonOptions, ...options };
 
     super({
-      defaultView: "button.png",
-      nineSliceSprite: [38, 50, 38, 50],
+      defaultView: "shooter_button_no_text.png",
       anchor: 0.5,
       text: new Label({
         text: opts.text,
@@ -32,7 +26,7 @@ export class Button extends FancyButton {
           fontSize: opts.fontSize,
         },
       }),
-      textOffset: { x: 0, y: -13 },
+      textOffset: { x: 0, y: 0 },
       defaultTextAnchor: 0.5,
       scale: 0.9,
       animations: {
@@ -55,16 +49,5 @@ export class Button extends FancyButton {
 
     this.width = opts.width;
     this.height = opts.height;
-
-    this.onDown.connect(this.handleDown.bind(this));
-    this.onHover.connect(this.handleHover.bind(this));
-  }
-
-  private handleHover() {
-    engine().audio.sfx.play("main/sounds/sfx-hover.wav");
-  }
-
-  private handleDown() {
-    engine().audio.sfx.play("main/sounds/sfx-press.wav");
   }
 }
